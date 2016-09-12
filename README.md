@@ -43,6 +43,50 @@ parsnp -r draft_assembly_reference -d ~/dir/containing/all/assemblies/ -p 20 -o 
 
 >For parsnp and HARVEST, the draft assembly of S2239(16) was used as a reference for all steps. This is due to it being the oldest isolate obtained from the patient.
 
+>Comparisons were visualised using gingr and a tree was exported using gingr that was visualised using MEGA 7.
 
+**Variant analysis of patient isolates**
 
+>**Mapping trimmed sequences to the S2239(16) draft assembly sequence**
+
+```bash
+bowtie2-build S2239_draft.fa outputname
+
+samtools faidx reference.fa
+
+bowtie2 -p N -t -x S2239_draft.fa -1 output1_forward_paired.fq.gz \
+ -2 output1_reverse_paired.fq.gz -S output1.sam
+``` 
+
+>This is simply mapping the trimmed reads to the draft genome, using quite default parameters. There is quite a lot of changes to this that can be made to be more sensitive etc.
+
+>**Processing mapped reads**
+
+```bash
+samtools view -b -S -o output1.bam output1.sam
+
+samtools sort output1.bam > output1.sorted.bam
+
+samtools index output1.sorted.bam
+
+```
+>**Calling variants using Freebayes**
+
+```bash
+freebayes.py -f S2239_draft.fa -p 1 output1.sorted.bam > output1.raw.vcf
+
+```
+
+>**Processing variants**
+
+>***I personally found manually processing variants based on quality, coverage, strand bias etc. to be more effective than filtering the vcf files with tools like bcffilter or vcfutils.***
+
+```
+filtering based on
+- QUAL >100
+- DP (coverage) >20
+- QR (phred score for variant) > 100
+- AO (alternate allele count) < 10
+
+```
 
