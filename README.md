@@ -19,7 +19,8 @@ ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:5 TRAILING:5 SLIDINGWINDOW:4:20 MINLE
 >**Preliminary genome assembly of trimmed data using SPAdes**
 
 ```
-spades.py --careful -k 21,71,91,101 -1 trimmed_forward_reads.fastq -2 trimmed_reverse_reads.fastq -o output_dir
+spades.py --careful -k 21,71,91,101 \
+-1 trimmed_forward_reads.fastq -2 trimmed_reverse_reads.fastq -o output_dir
 
 ```
 
@@ -101,7 +102,8 @@ breseq -j 20 -r ~/path/to/S2239_draft.fasta -o sample1_out ~/path/to/reads/sampl
 >Breseq (in this case) gave a comparable number of mutations, although there is no position information in respect to a reference genome, just scaffold number and base change. This makes associating gene specific changes more difficult. An alternative is to order the contigs in reference to PAO1 (using MAUVE), then perform an annotation on the ordered draft assembly using RAST or PROKKA. This will give approx position and gene information. To do these extra steps -
 
 ```bash
-java -Xmx50000m -cp Mauve.jar org.gel.mauve.contigs.ContigOrderer -output ordered_S2239 -ref PAO1.gbk -draft S2239_draft.fasta
+java -Xmx50000m -cp Mauve.jar org.gel.mauve.contigs.ContigOrderer -output ordered_S2239 -ref PAO1.gbk \
+-draft S2239_draft.fasta
 
 ```
 
@@ -121,7 +123,8 @@ prokka --genus my_PSEUDOMONAS_db --outdir output_S2239_PROKKA_annotation --evalu
 >RNAseq data was mapped using bowtie2 (similar as above) and then processed using SAMtools (as above) and then finally analysed for differential expression using cuffdiff.
 
 ```bash
-cuffdiff -p 20 PAO1_reference.gtf sample1.1.sorted.bam,sample2.1.sorted.bam,sample3.1.sorted.bam \ sample1.2.sorted.bam,sample2.2.sorted.bam,sample3.2.sorted.bam -o outputRNA
+cuffdiff -p 20 PAO1_reference.gtf sample1.1.sorted.bam,sample2.1.sorted.bam,sample3.1.sorted.bam \
+sample1.2.sorted.bam,sample2.2.sorted.bam,sample3.2.sorted.bam -o outputRNA
 
 ```
 
