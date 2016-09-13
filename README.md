@@ -23,7 +23,7 @@ spades.py --careful -k 21,71,91,101 -1 trimmed_forward_reads.fastq -2 trimmed_re
 
 ```
 
->I trialed SPAdes using my own trimming and then using raw data to see how their internal QC worked, and it gave a comparable result. I would suggest to try both ways, different datasets might behave differently.
+>I trialled SPAdes using my own trimming and then using raw data to see how their internal QC worked, and it gave a comparable result. I would suggest to try both ways, different datasets might behave differently.
 
 >**Validation of contigs using the A5 assembly pipeline**
 
@@ -89,4 +89,42 @@ filtering based on
 - AO (alternate allele count) < 10
 
 ```
+
+**Alternate analysis of variants using breseq**
+
+```bash
+breseq -j 20 -r ~/path/to/S2239_draft.fasta -o sample1_out ~/path/to/reads/sample1_R1.fastq.gz \
+~/path/to/reads/sample1_R2.fastq.gz
+
+```
+
+>Breseq (in this case) gave a comparable number of mutations, although there is no position information in respect to a reference genome, just scaffold number and base change. This makes associating gene specific changes more difficult. An alternative is to order the contigs in reference to PAO1 (using MAUVE), then perform an annotation on the ordered draft assembly using RAST or PROKKA. This will give approx position and gene information. To do these extra steps -
+
+```bash
+java -Xmx50000m -cp Mauve.jar org.gel.mauve.contigs.ContigOrderer -output ordered_S2239 -ref PAO1.gbk -draft S2239_draft.fasta
+
+```
+
+>This output fasta file can then be uploaded to RAST (http://rast.nmpdr.org/) or annotated using PROKKA. For PROKKA i created a P. aeruginosa specific database containing PA7, PA14, LESB58 and PAO1 for annotation. This lead to a more specific annotation of the draft S2239 assembly, and enabled more thorough analysis.
+
+```bash
+prokka --genus my_PSEUDOMONAS_db --outdir output_S2239_PROKKA_annotation --evalue 0.001
+
+```
+
+>After this, the annotated output can be put through breseq (as detailed above)
+
+**RNAseq analysis**
+
+>RNAseq analysis was done using bowtie2 and cuffdiff. There may be some contention amongst researchers as to the best tools to analyse RNAseq from bacteria. From experience however, there is not a whole lot of difference between methods, if something is 10x upregulated and significant with one method, it will still be significant with another method.
+
+>RNAseq data was mapped using bowtie2 (similar as above) and then processed using SAMtools (as above) and then finally analysed for differential expression using cuffdiff.
+
+```bash
+cuffdiff -p 20 PAO1_reference.gtf sample1.1.sorted.bam,sample2.1.sorted.bam,sample3.1.sorted.bam \ sample1.2.sorted.bam,sample2.2.sorted.bam,sample3.2.sorted.bam -o outputRNA
+
+```
+
+
+
 
