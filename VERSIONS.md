@@ -21,8 +21,16 @@ Samtools 1.3.1
 Freebayes 1.0.2-16
 > Garrison E., Marth G. (2012). Haplotype-based variant detection from short-read sequencing. *arXiv*, **1207.3907**.
 
-BEDtools 2.26.0
-> Quinlan A.R., Hall I.M. (2010). BEDTools: a flexible suite of utilities for comapiring genomic features. *Bioinformatics*, **26**(6), 841-842.
-
 BREseq 0.27.2
 > Deatherage D.E., Barrick J.E. (2014). Identification of mutations in laboratory-evolved microbes from next-generation sequencing data using *breseq*. *Methods Mol Biol*, **1161**. 165-188.
+
+MAUVE 
+> Rissman, A.I., Mau, B., Biehl, B.S., Darling, A.E., Glasner, J.D., Perna, N.T. (2009). Reordering contigs of draft genomes using the Mauve Aligner. *Bioinformatics*, **25**(16). 2071-2073
+
+Prokka 1.12
+>Seemann, T. (2014). Pokka: rapid prokaryotic genome annotation. *Bioinformatics*, **30**(14). 2068-2069.
+
+Cuffdiff 2.2.1
+>Trapnell, C., Hendrickson, D.G., Sauvageau, M., Goff, L., Rinn, J.L., Pachter, L. (2013). Differential analysis of gene regulation at transcript resolution with RNA-seq. *Nature Biotechnology*, **31**. 46-53.
+
+
