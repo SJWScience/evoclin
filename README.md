@@ -116,6 +116,13 @@ prokka --genus my_PSEUDOMONAS_db --outdir output_S2239_PROKKA_annotation --evalu
 
 >After this, the annotated output can be put through breseq (as detailed above)
 
+>Samples can also be aligned using ProgressiveMauve
+
+```bash
+progressiveMauve --output outputname.xmfa sample1.fasta sample2.fasta sample3.fasta . . .
+
+```
+
 **RNAseq analysis**
 
 >RNAseq analysis was done using bowtie2 and cuffdiff. There may be some contention amongst researchers as to the best tools to analyse RNAseq from bacteria. From experience however, there is not a whole lot of difference between methods, if something is 10x upregulated and significant with one method, it will still be significant with another method.
